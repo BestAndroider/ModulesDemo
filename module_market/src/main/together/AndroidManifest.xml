@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pack.suning.com.module_market">
+
+    <application>
+        <activity android:name="cn.suning.market.activity.MainActivity" />
+    </application>
+
+</manifest>

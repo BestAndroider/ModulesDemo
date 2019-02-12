@@ -1,0 +1,42 @@
+//Common组件永远以library形式存在。
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+
+
+    defaultConfig {
+        minSdkVersion  rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.testEspressoVersion"
+    //noinspection GradleCompatible
+    api "com.android.support:appcompat-v7:$rootProject.ext.supportAppcompatV7Version"
+
+    //这里要用api或compile关键字，否则别的组件无法使用这里引用的依赖库，切记切记。
+    api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    api "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjavaVersion"
+
+    //router
+    api'com.alibaba:arouter-api:1.3.1'
+}

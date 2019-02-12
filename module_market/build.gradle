@@ -1,0 +1,56 @@
+if (together.toBoolean()) {
+    //合并模式下以library的
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
+}
+
+
+android {
+    compileSdkVersion 28
+
+    sourceSets {
+        main {
+            if (together.toBoolean()) {
+                //指定合并模式下AndroidManifest文件目录。
+                manifest.srcFile 'src/main/together/AndroidManifest.xml'
+                java {
+                    exclude 'debug/**'
+                }
+            } else {
+                //指定独立开发时AndroidManifest文件目录
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+
+            annotationProcessorOptions {
+
+                arguments = [moduleName :project.getName() ]
+
+            } }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    annotationProcessor'com.alibaba:arouter-compiler:1.1.4'
+    api project(':module_common')
+}
